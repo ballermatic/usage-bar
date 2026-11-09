@@ -21,7 +21,7 @@ final class Store: ObservableObject {
 
     var title: String {
         if readings.isEmpty { return "…" }
-        return readings.filter { $0.short != "D" && $0.short != "I" }.map { r in
+        return readings.filter { $0.short != "DS" && $0.short != "DI" }.map { r in
             r.windows.first.map { "\(r.short) \(Int($0.percent.rounded()))" } ?? "\(r.short) –"
         }.joined(separator: " · ")
     }

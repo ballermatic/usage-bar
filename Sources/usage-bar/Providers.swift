@@ -49,7 +49,7 @@ private func getJSON(_ url: String, headers: [String: String]) async throws -> (
 // MARK: Claude — OAuth token Claude Code keeps in the Keychain
 
 func readClaude() async -> Reading {
-    var r = Reading(name: "Claude", short: "C")
+    var r = Reading(name: "Claude", short: "CC")
     guard let raw = keychain("Claude Code-credentials"),
           let blob = try? JSONSerialization.jsonObject(with: Data(raw.utf8)) as? [String: Any],
           let token = (blob["claudeAiOauth"] as? [String: Any])?["accessToken"] as? String
@@ -73,7 +73,7 @@ func readClaude() async -> Reading {
 // MARK: oc — OpenCode Go usage endpoint
 
 func readOpenCode() async -> Reading {
-    var r = Reading(name: "OpenCode Go", short: "O")
+    var r = Reading(name: "OpenCode Go", short: "OC")
     guard let key = keychain("dev.pi.opencode-api-key") else { r.error = "No key in Keychain"; return r }
     do {
         let (j, code) = try await getJSON("https://opencode.ai/zen/go/v1/usage",
@@ -93,7 +93,7 @@ func readOpenCode() async -> Reading {
 // MARK: Codex — last rate_limits event written to the newest session log
 
 func readCodex() async -> Reading {
-    var r = Reading(name: "Codex", short: "X")
+    var r = Reading(name: "Codex", short: "GPT")
     let fm = FileManager.default
     let root = fm.homeDirectoryForCurrentUser.appendingPathComponent(".codex/sessions")
 
@@ -145,7 +145,7 @@ func Self_ago(_ s: TimeInterval) -> String {
 // MARK: DeepSeek — prepaid balance
 
 func readDeepSeek() async -> Reading {
-    var r = Reading(name: "DeepSeek", short: "D")
+    var r = Reading(name: "DeepSeek", short: "DS")
     guard let key = keychain("dev.pi.deepseek-api-key") else { r.error = "No key in Keychain"; return r }
     do {
         let (j, code) = try await getJSON("https://api.deepseek.com/user/balance",
@@ -165,7 +165,7 @@ func readDeepSeek() async -> Reading {
 // MARK: DeepInfra — billing state (no usage endpoint exists)
 
 func readDeepInfra() async -> Reading {
-    var r = Reading(name: "DeepInfra", short: "I")
+    var r = Reading(name: "DeepInfra", short: "DI")
     guard let key = keychain("dev.pi.deepinfra-api-key") else { r.error = "No key in Keychain"; return r }
     do {
         let (j, code) = try await getJSON("https://api.deepinfra.com/payment/checklist",
